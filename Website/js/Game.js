@@ -1,5 +1,4 @@
 // Game.js
-// we like this version -Max
 
 const imageNames = ["America", "Australia", "Brazil", "China", "France", "Stonehenge"];
 let currentWordIndex = 0; // Index to keep track of the current word from the array
