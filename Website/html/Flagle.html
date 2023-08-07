@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../css/Wordle_styles.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="/Login" target="_blank">Login</a>
+            <a href="/Game_description" target="_blank">Game Description</a>
+            <a href="/Contact_us" target="_blank">Contact us</a>
+        </nav>
+        <h1>Flagle</h1>
+        <hr>
+        <span id="game-score">Score: 0</span>
+        <span id="game-attempt">Attempt left: 5</span>
+    </header>
+    
+    <main>
+        <section class="center-content">
+            <img src="" alt="game image" id="game-img">
+        </section>    
+
+        <section id="game-container" class="center-content">
+            <h1> Enter Guess Here </h1>
+            <div id="boxes-container">   
+                <!-- word grid will be generated with JS -->
+            </div>
+            <button id="submit-button"> Submit guess </button>
+        </section>
+
+        <section id="guess-result">
+        </section>
+
+        <section id="keyboard" class="center-content">
+            <div id="keyboard-row">
+                <button class="key" onclick="handleKeyPress('Q')">Q</button>
+                <button class="key" onclick="handleKeyPress('W')">W</button>
+                <button class="key" onclick="handleKeyPress('E')">E</button>
+                <button class="key" onclick="handleKeyPress('R')">R</button>
+                <button class="key" onclick="handleKeyPress('T')">T</button>
+                <button class="key" onclick="handleKeyPress('Y')">Y</button>
+                <button class="key" onclick="handleKeyPress('U')">U</button>
+                <button class="key" onclick="handleKeyPress('I')">I</button>
+                <button class="key" onclick="handleKeyPress('O')">O</button>
+                <button class="key" onclick="handleKeyPress('P')">P</button>
+              </div>
+            <div class="keyboard-row">
+                <button class="key" onclick="handleKeyPress('A')">A</button>
+                <button class="key" onclick="handleKeyPress('S')">S</button>
+                <button class="key" onclick="handleKeyPress('D')">D</button>
+                <button class="key" onclick="handleKeyPress('F')">F</button>
+                <button class="key" onclick="handleKeyPress('G')">G</button>
+                <button class="key" onclick="handleKeyPress('H')">H</button>
+                <button class="key" onclick="handleKeyPress('J')">J</button>
+                <button class="key" onclick="handleKeyPress('K')">K</button>
+                <button class="key" onclick="handleKeyPress('L')">L</button>
+              </div>
+            <div class="keyboard-row">
+                <button class="key" onclick="handleKeyPress('Z')">Z</button>
+                <button class="key" onclick="handleKeyPress('X')">X</button>
+                <button class="key" onclick="handleKeyPress('C')">C</button>
+                <button class="key" onclick="handleKeyPress('V')">V</button>
+                <button class="key" onclick="handleKeyPress('B')">B</button>
+                <button class="key" onclick="handleKeyPress('N')">N</button>
+                <button class="key" onclick="handleKeyPress('M')">M</button>
+              </div>
+          </section>
+    </main>
+
+    <script src="../js/Game.js"></script>
+
+    <!-- script to fetch html file for main page -->
+    <script>
+        fetch("http://localhost:8000")
+        .then(response => response.json())
+        .then(data => console.log(data));
+    </script>
+</body>
+</html>

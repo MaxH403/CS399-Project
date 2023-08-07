@@ -113,6 +113,7 @@ body, html {
   margin-right: 2px;
   border: 1px solid black;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .guess-row {
@@ -139,6 +140,42 @@ body, html {
 
 .right-letter {
   background-color: yellow;
+}
+
+#keyboard {
+  display: flex;
+  flex-direction: column; /* Stack the rows vertically */
+  align-items: center;
+  margin-top: 20px; /* Add some space between the keyboard and other elements */
+}
+
+.keyboard-row {
+  display: flex; /* Display the keys in a row */
+  justify-content: center; /* Center the keys horizontally within the row */
+}
+
+.key {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer; /* Make it clear that the buttons are clickable */
+  font-size: 18px; /* Adjust the font size as needed */
+  line-height: 40px; /* Vertically center the text */
+  text-align: center; /* Horizontally center the text */
+}
+
+.key.correct-letter {
+  background-color: green;
+}
+
+.key.right-letter {
+  background-color: yellow;
+}
+
+.key.wrong-letter {
+  background-color: grey;
 }
 
 #submit-button {
