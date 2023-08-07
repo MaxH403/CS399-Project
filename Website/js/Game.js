@@ -20,7 +20,7 @@ function setAttempt(){
 // picks random country to ensure no repeats
 async function getRandomCountry() {
     // fetch countries from server
-    const response = await fetch('http://localhost:8000/countries');
+    const response = await fetch('/countries');
     if (!response.ok) {
         console.error(`Error fetching countries: ${response.status}`);
         return;
@@ -141,6 +141,7 @@ function processGuess() {
         attemptTime--;
         setAttempt();
     } else {
+        alert("Congratulations! You've guessed the correct country!");
         clearKeyColors();
         setRandomImage();
         removeGuessRows(guessBoxes);
@@ -153,7 +154,7 @@ function processGuess() {
 
     // If the guess was over the attempt times than restart a new game
     if (attemptTime<=0){
-        alert(`Game over, correct answer is ${currentCountry.name.toUpperCase()}`)
+        alert(`Game over, correct answer is ${currentCountry.name}`)
         clearKeyColors();
         setRandomImage();
         removeGuessRows(guessBoxes);
@@ -186,28 +187,44 @@ function clearBoxes(guessBoxes) {
     }
 }
 
+function updateKeyboard(letter, className) {
+    // Select all keys with the given letter
+    const keys = document.querySelectorAll(`#keyboard .key[onclick="handleKeyPress('${letter.toUpperCase()}')"]`);
+    keys.forEach(key => {
+        // If the key is already marked as correct, do not change its class
+        if (key.classList.contains("correct-letter")) return;
+
+        // Clear previous classes from the key
+        key.className = "key";
+
+        // Add the new class
+        key.classList.add(className);
+    });
+}
 
 // Function to compare the user's guess with the current word from the array
 function compareGuess(guessBoxes) {
     const currentWord = currentCountry.name.toUpperCase();
-    const userGuess = Array.from(guessBoxes).map(box => box.value.toUpperCase()).join('');
-  
+
     for (let i = 0; i < currentWord.length; i++) {
-      let box = guessBoxes[i];
-      let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${box.value.toUpperCase()}')"]`);
-  
-      if (box.value.toUpperCase() === currentWord[i]) {
-        box.classList.add("correct-letter");
-        key.classList.add("correct-letter");
-      } else if (currentWord.includes(box.value.toUpperCase())) {
-        box.classList.add("right-letter");
-        key.classList.add("right-letter");
-      } else {
-        box.classList.add("wrong-letter");
-        key.classList.add("wrong-letter");
-      }
+        let box = guessBoxes[i];
+        let className;
+
+        // Clear previous classes from the box
+        box.className = "empty-box";
+
+        if (box.value.toUpperCase() === currentWord[i]) {
+            className = "correct-letter";
+        } else if (currentWord.includes(box.value.toUpperCase())) {
+            className = "right-letter";
+        } else {
+            className = "wrong-letter";
+        }
+
+        box.classList.add(className);
+        updateKeyboard(box.value, className);
     }
-  }
+}
 
 function handleKeyPress(letter) {
     // Find the first empty box
