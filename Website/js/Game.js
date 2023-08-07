@@ -80,8 +80,14 @@ function createEmptyBoxes(numBoxes) {
             if (event.key === "Enter") {
                 processGuess();
             } else if (event.key === "Backspace" && box.value === '' && i > 0) {
-                // if backspace is pressed in an empty box, move focus to the previous box
+                // If backspace is pressed in an empty box, move focus to the previous box
                 boxesContainer.children[i - 1].focus();
+            } else if (event.key === "ArrowLeft" && i > 0) {
+                // If left arrow key is pressed, move focus to the previous box
+                boxesContainer.children[i - 1].focus();
+            } else if (event.key === "ArrowRight" && i < numBoxes - 1) {
+                // If right arrow key is pressed, move focus to the next box
+                boxesContainer.children[i + 1].focus();
             }
         });
         // append the box to the container
@@ -165,7 +171,6 @@ function processGuess() {
         setAttempt();
     }
     
-
     // Focus on the first box
     const boxesContainer = document.getElementById("boxes-container");
     if (boxesContainer.children.length > 0) {
@@ -177,7 +182,6 @@ function showHint() {
     const hint = currentCountry.continent;
     alert(`Hint: The country is located in ${hint}`);
 }
-
 
 // function to clear boxes
 function clearBoxes(guessBoxes) {
