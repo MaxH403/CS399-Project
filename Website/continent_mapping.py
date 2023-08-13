@@ -6,7 +6,7 @@ continent_mapping = {
     "bn": "Asia", "bo": "South America", "br": "South America", "bs": "North America", "bt": "Asia",
     "bw": "Africa", "by": "Europe", "bz": "North America", "ca": "North America", "ch": "Europe",
     "cl": "South America", "cm": "Africa", "cn": "Asia", "co": "South America", "cu": "North America",
-    "cw": "North America", "cy": "Asia", "cz": "Europe", "de": "Europe", "dj": "Africa",
+    "cw": "North America", "cy": "Asia", "de": "Europe", "dj": "Africa",
     "dk": "Europe", "dm": "North America", "dz": "Africa", "ec": "South America", "ee": "Europe",
     "eg": "Africa", "er": "Africa", "es": "Europe", "et": "Africa", "fi": "Europe", "fj": "Oceania",
     "fm": "Oceania", "fr": "Europe", "ga": "Africa", "gd": "North America", "ge": "Asia",
