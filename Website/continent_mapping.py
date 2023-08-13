@@ -30,5 +30,5 @@ continent_mapping = {
     "tg": "Africa", "th": "Asia", "tj": "Asia", "tk": "Oceania", "tn": "Africa", "to": "Oceania",
     "tr": "Asia", "tv": "Oceania", "tw": "Asia", "tz": "Africa", "ua": "Europe", "ug": "Africa",
     "uy": "South America", "uz": "Asia", "ve": "South America", "vn": "Asia", "vu": "Oceania",
-    "ws": "Oceania", "xk": "Europe", "ye": "Asia", "yt": "Africa", "zm": "Africa", "zw": "Africa",
+    "ws": "Oceania", "xk": "Europe", "ye": "Asia", "zm": "Africa", "zw": "Africa",
 }

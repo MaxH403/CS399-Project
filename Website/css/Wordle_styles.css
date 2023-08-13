@@ -323,7 +323,7 @@ body {
 .how-to-play-dropdown-content {
   background-color: #1a1b26;
   box-shadow: 0px 1px 5px 0px rgb(98, 98, 98);
-  height: 500px;
+  height: 510px;
   width: 400px;
   overflow: auto;
 }
@@ -422,9 +422,12 @@ body {
 }
 
 .slider-container {
-  position: relative;
-  width: 20%;
-  max-width: 800px;
+  position: fixed;
+  left: 0; /* Align to the left */
+  bottom: 0; /* Align to the bottom */
+  margin-bottom: 5px;
+  width: 10%;
+  max-width: 400px;
   /* margin: 0 auto; */
   overflow: hidden;
 }
