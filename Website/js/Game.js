@@ -4,7 +4,6 @@ let currentCountry = null;
 let incorrectAttempts = 0;
 let score = 0;
 let attemptTime = 5
-const keyStatus = {};
 
 //Set Score
 function setScore() {
@@ -213,50 +212,75 @@ function clearBoxes(guessBoxes) {
 function compareGuess(guessBoxes) {
 	const currentWord = currentCountry.name.toUpperCase();
 	const userGuess = Array.from(guessBoxes).map(box => box.value.toUpperCase()).join('');
-
+  
 	const letterCount = {};
 	for (let letter of currentWord) {
-		letterCount[letter] = (letterCount[letter] || 0) + 1;
+	  letterCount[letter] = (letterCount[letter] || 0) + 1;
 	}
-
+  
+	// Initialize an object to track the count of correct guesses for each letter
+	const correctGuessCount = {};
+  
+	// Initialize an object to track the highest priority color for each key
+	const keyPriority = {};
+  
+	// First, mark correct letters
 	for (let i = 0; i < currentWord.length; i++) {
-		let box = guessBoxes[i];
-		let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${box.value.toUpperCase()}')"]`);
-
-		// Remove previous classes
-		key.classList.remove("correct-letter", "right-letter", "wrong-letter");
-
-		if (box.value.toUpperCase() === currentWord[i]) {
-			box.classList.add("correct-letter");
-			keyStatus[box.value.toUpperCase()] = 'correct-letter';
+	  let box = guessBoxes[i];
+	  let keyChar = box.value.toUpperCase();
+  
+	  if (keyChar === currentWord[i]) {
+		correctGuessCount[keyChar] = (correctGuessCount[keyChar] || 0) + 1;
+		box.classList.add("correct-letter");
+		keyPriority[keyChar] = 2; // Green priority
+	  }
+	}
+  
+	// Next, handle the other cases
+	for (let i = 0; i < currentWord.length; i++) {
+	  let box = guessBoxes[i];
+	  let keyChar = box.value.toUpperCase();
+	  let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${keyChar}')"]`);
+  
+	  if (keyChar !== currentWord[i]) {
+		let countInWord = letterCount[keyChar] || 0;
+		let countInGuess = Array.from(userGuess).filter(c => c === keyChar).length;
+  
+		// Check if this letter has already been guessed the correct number of times
+		if (correctGuessCount[keyChar] >= countInWord) {
+		  box.classList.add("wrong-letter");
+		  if (keyPriority[keyChar] < 1) {
+			keyPriority[keyChar] = 1; // Grey priority
+		  }
+		} else if (countInWord > 0 && countInGuess <= countInWord) {
+		  box.classList.add("right-letter");
+		  if (keyPriority[keyChar] < 1) {
+			keyPriority[keyChar] = 1; // Yellow priority
+		  }
+		  correctGuessCount[keyChar] = (correctGuessCount[keyChar] || 0) + 1; // Increment the correct guess count
 		} else {
-			let countInWord = letterCount[box.value.toUpperCase()] || 0;
-			let countInGuess = Array.from(userGuess).filter(c => c === box.value.toUpperCase()).length;
-
-			if (countInWord > 0 && countInGuess <= countInWord) {
-				box.classList.add("right-letter");
-				// Only update the key status if it's not already correct
-				if (keyStatus[box.value.toUpperCase()] !== 'correct-letter') {
-					keyStatus[box.value.toUpperCase()] = 'right-letter';
-				}
-			} else {
-				box.classList.add("wrong-letter");
-				// Only update the key status if it's not already correct or right
-				if (!keyStatus[box.value.toUpperCase()] || keyStatus[box.value.toUpperCase()] === 'wrong-letter') {
-					keyStatus[box.value.toUpperCase()] = 'wrong-letter';
-				}
-			}
-
-			letterCount[box.value.toUpperCase()]--; // Decrease the count for this letter
+		  box.classList.add("wrong-letter");
+		  if (keyPriority[keyChar] < 1) {
+			keyPriority[keyChar] = 1; // Grey priority
+		  }
 		}
+  
+		letterCount[keyChar]--; // Decrease the count for this letter
+	  }
 	}
-
-	// Apply the key status from the keyStatus object
-	for (let keyChar in keyStatus) {
-		let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${keyChar}')"]`);
-		key.classList.add(keyStatus[keyChar]);
+  
+	// Apply the highest priority color to each key
+	for (let keyChar in keyPriority) {
+	  let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${keyChar}')"]`);
+	  if (keyPriority[keyChar] === 2) {
+		key.classList.add("correct-letter");
+	  } else if (keyPriority[keyChar] === 1) {
+		key.classList.add("right-letter");
+	  } else {
+		key.classList.add("wrong-letter");
+	  }
 	}
-}
+  }
 
 function handleKeyPress(letter) {
 	// Find the first empty box
