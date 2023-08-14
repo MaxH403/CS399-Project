@@ -210,59 +210,36 @@ function clearBoxes(guessBoxes) {
 
 // Function to compare the user's guess with the current word from the array
 function compareGuess(guessBoxes) {
-	const currentWord = currentCountry.name.toUpperCase();
-	const userGuess = Array.from(guessBoxes).map(box => box.value.toUpperCase()).join('');
+    const currentWord = currentCountry.name.toUpperCase();
 
-	const letterCount = {};
-	const keyColors = {};
+    for (let i = 0; i < currentWord.length; i++) {
+        let box = guessBoxes[i];
+        let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${box.value.toUpperCase()}')"]`);        
+        
+        if (box.value.toUpperCase() === currentWord[i]) {
+            box.classList.add("correct-letter");
+            key.classList.add("correct-letter");
+        } else if (currentWord.includes(box.value.toUpperCase())) {
 
-	for (let letter of currentWord) {
-		letterCount[letter] = (letterCount[letter] || 0) + 1;
-	}
+            box.classList.add("right-letter");
+            key.classList.add("right-letter");
+        } else {
+            box.classList.add("wrong-letter");
+            key.classList.add("wrong-letter");
+        }
+    }
 
-	// First pass: identify all the green keys (correctly positioned letters)
-	for (let i = 0; i < currentWord.length; i++) {
-		let box = guessBoxes[i];
-		let keyChar = box.value.toUpperCase();
+    // handles duplicate letters 
+    for (let i = 0; i < currentWord.length; i++) {
+        let letter = currentWord[i];
+        let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${letter}')"]`);
 
-		if (keyChar === currentWord[i]) {
-			box.classList.add("correct-letter");
-			keyColors[keyChar] = "correct-letter"; // Set to green
-			letterCount[keyChar]--;
-		}
-	}
-
-	// Second pass: identify all the yellow and grey keys
-	for (let i = 0; i < currentWord.length; i++) {
-		let box = guessBoxes[i];
-		let keyChar = box.value.toUpperCase();
-		let countInWord = letterCount[keyChar] || 0;
-		let countInGuess = Array.from(userGuess).filter(c => c === keyChar).length;
-
-		if (keyChar !== currentWord[i]) {
-			if (countInWord > 0 && countInGuess <= countInWord) {
-				box.classList.add("right-letter"); // Yellow
-				// Only set to yellow if not already green
-				if (!keyColors[keyChar]) {
-					keyColors[keyChar] = "right-letter";
-				}
-				letterCount[keyChar]--;
-			} else {
-				box.classList.add("wrong-letter"); // Grey
-				// Only set to grey if not already green or yellow
-				if (!keyColors[keyChar]) {
-					keyColors[keyChar] = "wrong-letter";
-				}
-			}
-		}
-	}
-
-	// Update the keyboard with the correct colors
-	for (let char in keyColors) {
-		let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${char}')"]`);
-		key.classList.remove("correct-letter", "right-letter", "wrong-letter"); // Remove previous classes
-		key.classList.add(keyColors[char]);
-	}
+        if (guessBoxes[i].value.toUpperCase() === letter) {
+            key.classList.remove("right-letter", "wrong-letter");
+            key.classList.add("correct-letter");
+        }
+    }
+ 
 }
 
 function handleKeyPress(letter) {

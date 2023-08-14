@@ -24,7 +24,7 @@ continent_mapping = {
     "ne": "Africa", "ng": "Africa", "ni": "North America", "nl": "Europe", "no": "Europe",
     "np": "Asia", "nr": "Oceania", "nu": "Oceania", "om": "Asia", "pa": "North America", "pe": "South America",
     "ph": "Asia", "pk": "Asia", "pl": "Europe", "ps": "Asia", "pt": "Europe", "pw": "Oceania",
-    "py": "South America", "qa": "Asia", "re": "Africa", "ro": "Europe", "rs": "Europe", "ru": "Europe",
+    "py": "South America", "qa": "Asia", "ro": "Europe", "rs": "Europe", "ru": "Europe",
     "rw": "Africa", "sc": "Africa", "sd": "Africa", "se": "Europe", "sg": "Asia", "si": "Europe",
     "sk": "Europe", "sn": "Africa", "so": "Africa", "sr": "South America", "sy": "Asia", "td": "Africa",
     "tg": "Africa", "th": "Asia", "tj": "Asia", "tk": "Oceania", "tn": "Africa", "to": "Oceania",
