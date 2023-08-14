@@ -11,7 +11,7 @@ continent_mapping = {
     "eg": "Africa", "er": "Africa", "es": "Europe", "et": "Africa", "fi": "Europe", "fj": "Oceania",
     "fm": "Oceania", "fr": "Europe", "ga": "Africa", "gd": "North America", "ge": "Asia",
     "gg": "Europe", "gh": "Africa", "gi": "Europe", "gl": "North America", "gm": "Africa",
-    "gn": "Africa", "gp": "North America", "gr": "Europe", "gt": "North America", "gu": "Oceania",
+    "gn": "Africa", "gp": "North America", "gr": "Europe", "gt": "North America",
     "gy": "South America", "hn": "North America", "hr": "Europe", "ht": "North America", "hu": "Europe",
     "id": "Asia", "ie": "Europe", "il": "Asia", "in": "Asia", "iq": "Asia", "ir": "Asia",
     "is": "Europe", "it": "Europe", "je": "Europe", "jm": "North America", "jo": "Asia",

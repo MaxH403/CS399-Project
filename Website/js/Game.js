@@ -57,6 +57,7 @@ function setRandomImage() {
 function createEmptyBoxes(numBoxes) {
 	const boxesContainer = document.getElementById("boxes-container");
 	boxesContainer.innerHTML = ''; // Clear previous boxes
+
 	for (let i = 0; i < numBoxes; i++) {
 		// create an input box
 		const box = document.createElement("input");
@@ -82,8 +83,13 @@ function createEmptyBoxes(numBoxes) {
 			} else if (event.key === "Backspace" && box.value === '' && i > 0) {
 				// if backspace is pressed in an empty box, move focus to the previous box
 				boxesContainer.children[i - 1].focus();
+			} else if (event.key === "ArrowLeft" && i > 0) {
+				boxesContainer.children[i - 1].focus();
+			} else if (event.key === "ArrowRight" && i < numBoxes - 1) {
+				boxesContainer.children[i + 1].focus();
 			}
 		});
+
 		// append the box to the container
 		boxesContainer.appendChild(box);
 	}
@@ -148,6 +154,7 @@ function processGuess() {
 		attemptTime--;
 		setAttempt();
 	} else {
+		alert('Congratulations! You guessed the correct country!'); // Alert the user
 		clearKeyColors();
 		setRandomImage();
 		removeGuessRows(guessBoxes);
