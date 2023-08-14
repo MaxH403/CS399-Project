@@ -4,6 +4,7 @@ let currentCountry = null;
 let incorrectAttempts = 0;
 let score = 0;
 let attemptTime = 5
+const keyStatus = {};
 
 //Set Score
 function setScore() {
@@ -82,9 +83,14 @@ function createEmptyBoxes(numBoxes) {
 				processGuess();
 			} else if (event.key === "Backspace" && box.value === '' && i > 0) {
 				// if backspace is pressed in an empty box, move focus to the previous box
-				boxesContainer.children[i - 1].focus();
+				const prevBox = boxesContainer.children[i - 1];
+				prevBox.focus();
+				prevBox.setSelectionRange(prevBox.value.length, prevBox.value.length);
 			} else if (event.key === "ArrowLeft" && i > 0) {
-				boxesContainer.children[i - 1].focus();
+				event.preventDefault();
+				const prevBox = boxesContainer.children[i - 1];
+				prevBox.focus();
+				prevBox.setSelectionRange(prevBox.value.length, prevBox.value.length);
 			} else if (event.key === "ArrowRight" && i < numBoxes - 1) {
 				boxesContainer.children[i + 1].focus();
 			}
@@ -217,24 +223,38 @@ function compareGuess(guessBoxes) {
 		let box = guessBoxes[i];
 		let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${box.value.toUpperCase()}')"]`);
 
+		// Remove previous classes
+		key.classList.remove("correct-letter", "right-letter", "wrong-letter");
+
 		if (box.value.toUpperCase() === currentWord[i]) {
 			box.classList.add("correct-letter");
-			key.classList.add("correct-letter");
-			letterCount[box.value.toUpperCase()]--; // Decrease the count for this letter
+			keyStatus[box.value.toUpperCase()] = 'correct-letter';
 		} else {
-			// Check how many times this letter appears in the word
 			let countInWord = letterCount[box.value.toUpperCase()] || 0;
 			let countInGuess = Array.from(userGuess).filter(c => c === box.value.toUpperCase()).length;
 
 			if (countInWord > 0 && countInGuess <= countInWord) {
 				box.classList.add("right-letter");
-				key.classList.add("right-letter");
-				letterCount[box.value.toUpperCase()]--; // Decrease the count for this letter
+				// Only update the key status if it's not already correct
+				if (keyStatus[box.value.toUpperCase()] !== 'correct-letter') {
+					keyStatus[box.value.toUpperCase()] = 'right-letter';
+				}
 			} else {
 				box.classList.add("wrong-letter");
-				key.classList.add("wrong-letter");
+				// Only update the key status if it's not already correct or right
+				if (!keyStatus[box.value.toUpperCase()] || keyStatus[box.value.toUpperCase()] === 'wrong-letter') {
+					keyStatus[box.value.toUpperCase()] = 'wrong-letter';
+				}
 			}
+
+			letterCount[box.value.toUpperCase()]--; // Decrease the count for this letter
 		}
+	}
+
+	// Apply the key status from the keyStatus object
+	for (let keyChar in keyStatus) {
+		let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${keyChar}')"]`);
+		key.classList.add(keyStatus[keyChar]);
 	}
 }
 
