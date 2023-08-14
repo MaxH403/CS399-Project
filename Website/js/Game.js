@@ -212,75 +212,58 @@ function clearBoxes(guessBoxes) {
 function compareGuess(guessBoxes) {
 	const currentWord = currentCountry.name.toUpperCase();
 	const userGuess = Array.from(guessBoxes).map(box => box.value.toUpperCase()).join('');
-  
+
 	const letterCount = {};
+	const keyColors = {};
+
 	for (let letter of currentWord) {
-	  letterCount[letter] = (letterCount[letter] || 0) + 1;
+		letterCount[letter] = (letterCount[letter] || 0) + 1;
 	}
-  
-	// Initialize an object to track the count of correct guesses for each letter
-	const correctGuessCount = {};
-  
-	// Initialize an object to track the highest priority color for each key
-	const keyPriority = {};
-  
-	// First, mark correct letters
+
+	// First pass: identify all the green keys (correctly positioned letters)
 	for (let i = 0; i < currentWord.length; i++) {
-	  let box = guessBoxes[i];
-	  let keyChar = box.value.toUpperCase();
-  
-	  if (keyChar === currentWord[i]) {
-		correctGuessCount[keyChar] = (correctGuessCount[keyChar] || 0) + 1;
-		box.classList.add("correct-letter");
-		keyPriority[keyChar] = 2; // Green priority
-	  }
+		let box = guessBoxes[i];
+		let keyChar = box.value.toUpperCase();
+
+		if (keyChar === currentWord[i]) {
+			box.classList.add("correct-letter");
+			keyColors[keyChar] = "correct-letter"; // Set to green
+			letterCount[keyChar]--;
+		}
 	}
-  
-	// Next, handle the other cases
+
+	// Second pass: identify all the yellow and grey keys
 	for (let i = 0; i < currentWord.length; i++) {
-	  let box = guessBoxes[i];
-	  let keyChar = box.value.toUpperCase();
-	  let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${keyChar}')"]`);
-  
-	  if (keyChar !== currentWord[i]) {
+		let box = guessBoxes[i];
+		let keyChar = box.value.toUpperCase();
 		let countInWord = letterCount[keyChar] || 0;
 		let countInGuess = Array.from(userGuess).filter(c => c === keyChar).length;
-  
-		// Check if this letter has already been guessed the correct number of times
-		if (correctGuessCount[keyChar] >= countInWord) {
-		  box.classList.add("wrong-letter");
-		  if (keyPriority[keyChar] < 1) {
-			keyPriority[keyChar] = 1; // Grey priority
-		  }
-		} else if (countInWord > 0 && countInGuess <= countInWord) {
-		  box.classList.add("right-letter");
-		  if (keyPriority[keyChar] < 1) {
-			keyPriority[keyChar] = 1; // Yellow priority
-		  }
-		  correctGuessCount[keyChar] = (correctGuessCount[keyChar] || 0) + 1; // Increment the correct guess count
-		} else {
-		  box.classList.add("wrong-letter");
-		  if (keyPriority[keyChar] < 1) {
-			keyPriority[keyChar] = 1; // Grey priority
-		  }
+
+		if (keyChar !== currentWord[i]) {
+			if (countInWord > 0 && countInGuess <= countInWord) {
+				box.classList.add("right-letter"); // Yellow
+				// Only set to yellow if not already green
+				if (!keyColors[keyChar]) {
+					keyColors[keyChar] = "right-letter";
+				}
+				letterCount[keyChar]--;
+			} else {
+				box.classList.add("wrong-letter"); // Grey
+				// Only set to grey if not already green or yellow
+				if (!keyColors[keyChar]) {
+					keyColors[keyChar] = "wrong-letter";
+				}
+			}
 		}
-  
-		letterCount[keyChar]--; // Decrease the count for this letter
-	  }
 	}
-  
-	// Apply the highest priority color to each key
-	for (let keyChar in keyPriority) {
-	  let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${keyChar}')"]`);
-	  if (keyPriority[keyChar] === 2) {
-		key.classList.add("correct-letter");
-	  } else if (keyPriority[keyChar] === 1) {
-		key.classList.add("right-letter");
-	  } else {
-		key.classList.add("wrong-letter");
-	  }
+
+	// Update the keyboard with the correct colors
+	for (let char in keyColors) {
+		let key = document.querySelector(`#keyboard .key[onclick="handleKeyPress('${char}')"]`);
+		key.classList.remove("correct-letter", "right-letter", "wrong-letter"); // Remove previous classes
+		key.classList.add(keyColors[char]);
 	}
-  }
+}
 
 function handleKeyPress(letter) {
 	// Find the first empty box
