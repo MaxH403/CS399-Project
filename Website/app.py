@@ -24,7 +24,6 @@ app.add_middleware(
 # mount static files directories 
 app.mount("/css", StaticFiles(directory="css"), name="css")
 app.mount("/js", StaticFiles(directory="js"), name="js")
-app.mount("/images", StaticFiles(directory="images"), name="images")
 
 # establish connection with MongoDB database
 def get_db():

@@ -1,4 +1,3 @@
-
 // variable to keep track of current country
 let currentCountry = null;
 let incorrectAttempts = 0;
