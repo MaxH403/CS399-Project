@@ -5,7 +5,7 @@ This project is an image-based guessing game inspired by the Wordle game concept
 
 ## Project Structure
 ### Backend: 
-- `app.py`: The main entry point for the application. It servees country data and other game related functionalities using the `FastAPI` framework.
+- `app.py`: The main entry point for the application. It serves country data and other game related functionalities using the `FastAPI` framework.
 - `database.py` Contains functions for database interactions, including establishing a connection to a MongoDB instance and inserting country codes.
 - `continent_mapping.py`: Provides a mapping of country codes to their respective continents.
 - `country_codes.json`: Contains country codes and country names
@@ -34,7 +34,7 @@ This application uses the following Python packages
 - `pymongo`: A Python driver for MongoDB.
 - `python-dotenv`: To read key-value pairs from a `.env` file.
 
-To install these dependencies manually, run: `pip install -r requirements.txt`
+To install these dependencies manually run: `pip install -r requirements.txt`
 
 ### Contributors 
 - Simon Zhao: https://github.com/SZSage
