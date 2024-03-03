@@ -51,48 +51,53 @@ function setRandomImage() {
 	});
 }
 
-
 // Function to create empty boxes
 function createEmptyBoxes(numBoxes) {
-	const boxesContainer = document.getElementById("boxes-container");
-	boxesContainer.innerHTML = ''; // Clear previous boxes
-	for (let i = 0; i < numBoxes; i++) {
-		// create an input box
-		const box = document.createElement("input");
-		box.type = "text";
-		box.maxLength = "1"; // limit the input length to 1 character
-		box.classList.add("empty-box"); // you can define "empty-box" class in your css
+    const boxesContainer = document.getElementById("boxes-container");
+    boxesContainer.innerHTML = ''; // Clear previous boxes
+    for (let i = 0; i < numBoxes; i++) {
+        // create an input box
+        const box = document.createElement("input");
+        box.type = "text";
+        box.maxLength = "1"; // limit the input length to 1 character
+        box.classList.add("empty-box"); // you can define "empty-box" class in your css
 
-		// Listen to the input event
-		box.addEventListener('input', function() {
-			// Convert value to uppercase
-			box.value = box.value.toUpperCase();
+        // Listen to the input event
+        box.addEventListener('input', function() {
+            // Convert value to uppercase
+            box.value = box.value.toUpperCase();
 
-			// If user enters a value and there is a next box, focus it
-			if (box.value !== '' && i < numBoxes - 1) {
-				boxesContainer.children[i + 1].focus();
-			}
-		});
+            // If user enters a value and there is a next box, focus it
+            if (box.value !== '' && i < numBoxes - 1) {
+                boxesContainer.children[i + 1].focus();
+            }
+        });
 
-		// listen to keydown event for "Enter" and "Backspace" keys
-		box.addEventListener('keydown', function(event) {
-			if (event.key === "Enter") {
-				processGuess();
-			} else if (event.key === "Backspace" && box.value === '' && i > 0) {
-				// if backspace is pressed in an empty box, move focus to the previous box
-				boxesContainer.children[i - 1].focus();
-			}
-		});
-		// append the box to the container
-		boxesContainer.appendChild(box);
-	}
+        // Listen to keydown event for "Enter", "Backspace", and arrow keys
+        box.addEventListener('keydown', function(event) {
+            if (event.key === "Enter") {
+                processGuess();
+            } else if (event.key === "Backspace" && box.value === '' && i > 0) {
+                // If backspace is pressed in an empty box, move focus to the previous box
+                boxesContainer.children[i - 1].focus();
+            } else if (event.key === "ArrowLeft" && i > 0) {
+                // Move focus to the previous box if the left arrow key is pressed
+                boxesContainer.children[i - 1].focus();
+            } else if (event.key === "ArrowRight" && i < numBoxes - 1) {
+                // Move focus to the next box if the right arrow key is pressed
+                boxesContainer.children[i + 1].focus();
+            }
+        });
 
-	// Focus on the first box
-	if (numBoxes > 0) {
-		boxesContainer.children[0].focus();
-	}
+        // append the box to the container
+        boxesContainer.appendChild(box);
+    }
+
+    // Focus on the first box
+    if (numBoxes > 0) {
+        boxesContainer.children[0].focus();
+    }
 }
-
 
 // Add an event listener to the "Submit guess" button
 document.getElementById("submit-button").addEventListener("click", processGuess);
@@ -138,28 +143,34 @@ function processGuess() {
 
 	clearBoxes(guessBoxes);
 
-	// If the guess was correct, set a new random image and remove all guess rows from previous guesses
-	if (!isCorrect) {
+	// If the guess was correct, show an alert and then set a new random image
+	if (isCorrect) {
+		let pointsReceived = incorrectAttempts >= 3 ? 5 : 10; // Example logic for points calculation
+	
+		// Transform the correct answer: first letter uppercase, the rest lowercase
+		let formattedAnswer = currentCountry.name.charAt(0).toUpperCase() + currentCountry.name.slice(1).toLowerCase();
+	
+		alert(`Correct! Answer: ${formattedAnswer} +${pointsReceived} points`);
+		
+		score += pointsReceived; // Add points to the score
+		setScore(); // Update the score display
+		
+		// Prepare for the next guess
+		clearKeyColors();
+		setRandomImage(); // This function fetches a new flag and resets the game state
+		removeGuessRows(guessBoxes);
+		
+		// Reset attempts and incorrect attempts for the next round
+		attemptTime = 5;
+		incorrectAttempts = 0;
+		setAttempt();
+	} else {
+		// Handle incorrect guess
 		incorrectAttempts++;
 		if (incorrectAttempts == 3) {
 			showHint();
 		}
 		attemptTime--;
-		setAttempt();
-	} else {
-		clearKeyColors();
-		setRandomImage();
-		removeGuessRows(guessBoxes);
-		if (incorrectAttempts >= 3) {
-			score += 5;
-			setScore();
-		}
-		else {
-			score += 10;
-			setScore();
-		}
-		attemptTime = 5;
-		incorrectAttempts = 0;
 		setAttempt();
 	}
 

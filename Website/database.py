@@ -29,4 +29,4 @@ if __name__ == "__main__":
     insert_country_codes(db)
     for country in get_country_codes(db):
         print(country)
-
+        

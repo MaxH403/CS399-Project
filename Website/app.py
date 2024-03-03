@@ -56,11 +56,11 @@ async def get_country_codes():
         code["_id"] = str(code["_id"])
     return country_codes
 
-# define root endpoint and return Wordle.html file 
+# define root endpoint and return Flagle.html file 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
-    # reads Wordle.html file and returns html file with status code 200
-    with open(os.path.join('html', 'Wordle.html'), 'r') as file:
+    # reads Flagle.html file and returns html file with status code 200
+    with open(os.path.join('html', 'Flagle.html'), 'r') as file:
         html_content = file.read()
     return HTMLResponse(content=html_content, status_code=200)
 
