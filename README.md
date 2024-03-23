@@ -1,4 +1,4 @@
-# CS399-Project
+# Flagle
 
 # Image-Based Wordle Game
 This project is an image-based guessing game inspired by the Wordle game concept where players guess country names based on the country flag. This application includes both frontend and backend components.
