@@ -3,85 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flagle</title>
+    <title>Document</title>
     <link rel="stylesheet" type="text/css" href="../css/Wordle_styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 </head>
 <body>
 
     <header>
-    <!-- <img src="#" alt="Logo of company"> -->
-        <div class="buttons-container"> 
-            <button id="how-to-play" type="button">?</button>
-            <div class="how-to-play-dropdown-content">
-                <p> How to play </p>
-                <p> Welcome to Flagle! </p>
-                <p> In this game, you will be shown a flag from around the world and be given 5 attempts at guessing which country or territory the flag represents.</p>
-                <p> You may enter in any combination of characters for your guess, and once you make your guess, each character will be highlighted to help you for your next attempt.</p>
-                <p> Grey means that character isn't in the word.</p>
-                <p> Yellow means that character is in the word but entered in wrong position.</p>
-                <p> Green means that character is both in the word and in the correct position.</p>
-            </div>
-        </div>
-
-        <h1>Flagle</h1>    
+        <img src="#" alt="Logo of company">
+        <nav>
+            <a href="./Login.html" target="_blank">Login</a>
+            <a href="./game_description" target="_blank">Game Description</a>
+            <a href="./Company.html" target="_blank">Company</a>
+            <a href="./Contact_us.html" target="_blank">Contact us</a>
+        </nav>
+        <h1>Placele</h1>
+        <hr>
     </header>
     
     <main>
         <section class="center-content">
             <img src="" alt="game image" id="game-img">
         </section>    
-        
+
         <section id="game-container" class="center-content">
-            <span id="game-score">Score: 0</span>
-            <span id="game-attempt">Attempts left: 5</span>
-            <h2> Enter Guess Here </h2>
+            <h1> Enter Guess Here </h1>
             <div id="boxes-container">   
                 <!-- word grid will be generated with JS -->
             </div>
             <button id="submit-button"> Submit guess </button>
-
-            
         </section>
 
         <section id="guess-result">
         </section>
-
-        <section id="keyboard" class="center-content">
-            <div class="keyboard-row">
-                <button class="key" onclick="handleKeyPress('Q')">Q</button>
-                <button class="key" onclick="handleKeyPress('W')">W</button>
-                <button class="key" onclick="handleKeyPress('E')">E</button>
-                <button class="key" onclick="handleKeyPress('R')">R</button>
-                <button class="key" onclick="handleKeyPress('T')">T</button>
-                <button class="key" onclick="handleKeyPress('Y')">Y</button>
-                <button class="key" onclick="handleKeyPress('U')">U</button>
-                <button class="key" onclick="handleKeyPress('I')">I</button>
-                <button class="key" onclick="handleKeyPress('O')">O</button>
-                <button class="key" onclick="handleKeyPress('P')">P</button>
-              </div>
-            <div class="keyboard-row">
-                <button class="key" onclick="handleKeyPress('A')">A</button>
-                <button class="key" onclick="handleKeyPress('S')">S</button>
-                <button class="key" onclick="handleKeyPress('D')">D</button>
-                <button class="key" onclick="handleKeyPress('F')">F</button>
-                <button class="key" onclick="handleKeyPress('G')">G</button>
-                <button class="key" onclick="handleKeyPress('H')">H</button>
-                <button class="key" onclick="handleKeyPress('J')">J</button>
-                <button class="key" onclick="handleKeyPress('K')">K</button>
-                <button class="key" onclick="handleKeyPress('L')">L</button>
-              </div>
-            <div class="keyboard-row">
-                <button class="key" onclick="handleKeyPress('Z')">Z</button>
-                <button class="key" onclick="handleKeyPress('X')">X</button>
-                <button class="key" onclick="handleKeyPress('C')">C</button>
-                <button class="key" onclick="handleKeyPress('V')">V</button>
-                <button class="key" onclick="handleKeyPress('B')">B</button>
-                <button class="key" onclick="handleKeyPress('N')">N</button>
-                <button class="key" onclick="handleKeyPress('M')">M</button>
-              </div>
-          </section>
     </main>
 
     <script src="../js/Game.js"></script>
